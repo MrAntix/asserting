@@ -28,7 +28,7 @@ public sealed class ReadonlyCollectionTests
             .Run();
 
         var actualError = Assert.Single(actualErrors);
-        Assert.Equal("value:not-contains", actualError);
+        Assert.Equal("value:not-contains(2)", actualError);
     }
 
     [Fact]
@@ -40,7 +40,7 @@ public sealed class ReadonlyCollectionTests
             .Run();
 
         var actualError = Assert.Single(actualErrors);
-        Assert.Equal("value:not-contains", actualError);
+        Assert.Equal("value:not-contains(i => i == 2)", actualError);
     }
 
     [Theory]

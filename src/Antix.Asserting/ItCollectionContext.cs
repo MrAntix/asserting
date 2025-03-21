@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Antix.Asserting;
 
@@ -20,20 +21,22 @@ public sealed record ItCollectionContext<TItem> :
         };
 
     public ItCollectionContext<TItem> Contains(
-        Func<TItem?, bool> predicate
+        Func<TItem?, bool> predicate,
+        [CallerArgumentExpression(nameof(predicate))] string? expression = null
         ) => And(
             value => new()
             {
                 TestSuccess = () => value?.Any(predicate) == true,
-                FailMessage = $"contains"
+                FailMessage = $"contains({expression})"
             }) with
         {
             Negate = false
         };
 
     public ItCollectionContext<TItem> Contains(
-        TItem? item
-        ) => Contains(i => Equals(i, item));
+        TItem? item,
+        [CallerArgumentExpression(nameof(item))] string? expression = null
+        ) => Contains(i => Equals(i, item), expression);
 
     public ItCollectionContext<TItem> And(
         Func<IReadOnlyCollection<TItem?>?, Assertion> provider

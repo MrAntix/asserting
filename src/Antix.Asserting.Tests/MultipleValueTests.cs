@@ -43,6 +43,6 @@ public sealed class MultipleValueTests
 
         Assert.Equal("value.Name:length(5)", actualErrors[0]);
         Assert.Equal("value.Age:greater-than(40)", actualErrors[1]);
-        Assert.Equal("values:not-contains", actualErrors[2]);
+        Assert.Equal("values:not-contains(value)", actualErrors[2]);
     }
 }

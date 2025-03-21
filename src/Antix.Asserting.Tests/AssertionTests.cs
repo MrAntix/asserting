@@ -1,6 +1,6 @@
-namespace Antix.Assertions.Tests;
+namespace Antix.Asserting.Tests;
 
-public sealed class AssertionsTests
+public sealed class AssertionTests
 {
 
     [Theory]
@@ -10,28 +10,26 @@ public sealed class AssertionsTests
     [InlineData(null, true, null)]
     public void Assertion(string? value, bool negate, string? expected)
     {
-        var assertion = new Assertion<string>()
+        var assertion = new Assertion()
         {
-            Test = () => value is not null,
-            Negate = negate,
+            TestSuccess = () => value is not null,
             FailMessage = "null"
         };
 
-        Assert.Equal(expected, assertion.Run());
+        Assert.Equal(expected, assertion.Run(negate));
     }
 
     [Fact]
     public void Specific_FailNotMessage()
     {
 
-        var assertion = new Assertion<object>()
+        var assertion = new Assertion()
         {
-            Test = () => true,
-            Negate = true,
+            TestSuccess = () => true,
             FailMessage = "Rhubarb",
             FailNotMessage = "Custard"
         };
 
-        Assert.Equal(assertion.FailNotMessage, assertion.Run());
+        Assert.Equal(assertion.FailNotMessage, assertion.Run(true));
     }
 }

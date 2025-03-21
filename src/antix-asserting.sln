@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antix.Asserting", "Antix.Asserting\Antix.Asserting.csproj", "{1E54AD35-8B56-5127-BB5E-FB2BAF6E7C2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antix.Asserting.Tests", "Antix.Asserting.Tests\Antix.Asserting.Tests.csproj", "{E429A225-2610-FE29-DCCB-C46572B02A61}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1E54AD35-8B56-5127-BB5E-FB2BAF6E7C2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E54AD35-8B56-5127-BB5E-FB2BAF6E7C2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E54AD35-8B56-5127-BB5E-FB2BAF6E7C2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E54AD35-8B56-5127-BB5E-FB2BAF6E7C2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E429A225-2610-FE29-DCCB-C46572B02A61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E429A225-2610-FE29-DCCB-C46572B02A61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E429A225-2610-FE29-DCCB-C46572B02A61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E429A225-2610-FE29-DCCB-C46572B02A61}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D0D27803-19E2-4D22-9DD5-3FABD3D1CE45}
+	EndGlobalSection
+EndGlobal

@@ -1,17 +1,16 @@
 using System;
 
-namespace Antix.Assertions;
+namespace Antix.Asserting;
 
-public sealed record Assertion<T>
+public sealed record Assertion
 {
-    public required Func<bool> Test { get; init; }
-    public required bool Negate { get; init; }
+    public required Func<bool> TestSuccess { get; init; }
     public required string FailMessage { get; init; }
     public string? FailNotMessage { get; init; }
 
-    public string? Run() => Test() != Negate
+    public string? Run(bool negate) => TestSuccess() != negate
             ? null
-            : Negate
+            : negate
                 ? FailNotMessage ?? $"not-{FailMessage}"
                 : FailMessage;
 }

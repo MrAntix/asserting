@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Antix.Assertions\Antix.Assertions.csproj" />
+    <ProjectReference Include="..\Antix.Asserting\Antix.Asserting.csproj" />
   </ItemGroup>
 
 </Project>

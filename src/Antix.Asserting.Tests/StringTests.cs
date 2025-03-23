@@ -9,9 +9,10 @@ public sealed class StringTests
         Assert.False(
             Validate
                 .It("Hello")
-                    .Not.Is(Null, Empty, Whitespace)
-                    .Is(MinLength(2), MaxLength(10))
-                .Fails(out var actualErrors)
+                    .Not.Is(Whitespace)
+                    .Is(NotWhitespace)
+                    .Is(Length(5), MinLength(2), MaxLength(10))
+                .Failure(out var actualErrors)
             );
 
         Assert.Empty(actualErrors);
@@ -19,13 +20,14 @@ public sealed class StringTests
 
     [Theory]
     [InlineData(null, "value:not-null")]
-    [InlineData("", "value:not-empty")]
+    [InlineData("", "value:not-length(0)")]
     [InlineData(" ", "value:not-whitespace")]
     public void Fail_Null_Empty_Whitespace(string? value, string? expectedError)
     {
-        var actualErrors = Validate.It(value)
-            .Not.Is(Null, Empty, Whitespace)
-            .Run();
+        var context = Validate.It(value)
+            .Not.Is(Null, Whitespace, Length(0));
+
+        var actualErrors = context.Errors;
 
         var actualError = Assert.Single(actualErrors);
         Assert.Equal(expectedError, actualError);
@@ -34,24 +36,26 @@ public sealed class StringTests
     [Theory]
     [InlineData("Hi", "value:length(5)")]
     [InlineData("Hello there", "value:length(5)")]
-    public void Fail_Length(string? value, string? expectedError)
+    public void Fail_Length(string? value, string expectedError)
     {
         var actualErrors = Validate.It(value)
             .Is(Length(5))
-            .Run();
+            .Errors;
 
         var actualError = Assert.Single(actualErrors);
         Assert.Equal(expectedError, actualError);
     }
 
     [Theory]
+    [InlineData(null, "value:not-null")]
+    [InlineData("     ", "value:not-whitespace")]
     [InlineData("Hi", "value:min-length(5)")]
     [InlineData("Hello there", "value:max-length(5)")]
-    public void Fail_MinLength_MaxLength(string? value, string? expectedError)
+    public void Fail_MinLength_MaxLength(string? value, string expectedError)
     {
         var actualErrors = Validate.It(value)
-            .Is(MinLength(5), MaxLength(5))
-            .Run();
+            .Is(NotNull, NotWhitespace, MinLength(5), MaxLength(5))
+            .Errors;
 
         var actualError = Assert.Single(actualErrors);
         Assert.Equal(expectedError, actualError);

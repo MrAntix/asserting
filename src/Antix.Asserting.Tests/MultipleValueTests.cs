@@ -18,8 +18,8 @@ public sealed class MultipleValueTests
         var actualErrors = Validate
             .It(value.Name).Is(Length(4))
             .It(value.Age).Is(LessThan(40))
-            .It(values).Contains(value)
-            .Run();
+            .It(values).Is(Count(2))
+            .Errors;
 
         Assert.Empty(actualErrors);
     }
@@ -38,11 +38,11 @@ public sealed class MultipleValueTests
         var actualErrors = Validate
             .It(value.Name).Is(Length(5))
             .It(value.Age).Is(GreaterThan(40))
-            .It(values).Not.Contains(value).Contains(value)
-            .Run();
+            .It(values).Is(Count(1))
+            .Errors;
 
         Assert.Equal("value.Name:length(5)", actualErrors[0]);
         Assert.Equal("value.Age:greater-than(40)", actualErrors[1]);
-        Assert.Equal("values:not-contains(value)", actualErrors[2]);
+        Assert.Equal("values:count(1)", actualErrors[2]);
     }
 }

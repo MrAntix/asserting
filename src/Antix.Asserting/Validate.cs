@@ -5,18 +5,23 @@ namespace Antix.Asserting;
 
 public static class Validate
 {
-    public static ItContext<T> It<T>(
+    public static ItemItContext<T> It<T>(
         T? value,
         [CallerArgumentExpression(nameof(value))] string? expression = null
-        ) => new() { Expression = expression!, Value = value };
+        ) => new(value) { Expression = expression! };
 
-    public static ItCollectionContext<TItem> It<TItem>(
+    public static ItemItContext<T> ItTemp<T>(
+        T? value,
+        [CallerArgumentExpression(nameof(value))] string? expression = null
+    ) => new(value) { Expression = expression! };
+
+    public static CollectionItContext<TItem> It<TItem>(
         IReadOnlyCollection<TItem>? value,
         [CallerArgumentExpression(nameof(value))] string? expression = null
-        ) => new() { Expression = expression!, Value = value };
+        ) => new(value) { Expression = expression! };
 
-    public static ItCollectionContext<TItem> It<TItem>(
+    public static CollectionItContext<TItem> It<TItem>(
         TItem[]? value,
         [CallerArgumentExpression(nameof(value))] string? expression = null
-        ) => new() { Expression = expression!, Value = value };
+        ) => new(value) { Expression = expression! };
 }

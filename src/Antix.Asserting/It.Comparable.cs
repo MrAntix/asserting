@@ -5,39 +5,33 @@ namespace Antix.Asserting;
 
 public static partial class Is
 {
-    public static Func<ItContext<T>, ItContext<T>> EqualTo<T>(
+    public static Func<T, NotNullAssertion> EqualTo<T>(
         T? comparison
         )
         where T : IComparable<T>
-        => context => context.And(
-            value => new()
-            {
-                TestSuccess = () => Comparer<T>.Default.Compare(value, comparison) == 0,
-                FailMessage = $"greater-than({comparison})"
-            }
-        );
+        => value => new()
+        {
+            Success = Comparer<T>.Default.Compare(value, comparison) == 0,
+            FailMessage = $"equal-to({comparison})"
+        };
 
-    public static Func<ItContext<T>, ItContext<T>> GreaterThan<T>(
+    public static Func<T, NotNullAssertion> GreaterThan<T>(
         T? comparison
         )
         where T : IComparable<T>
-        => context => context.And(
-            value => new()
-            {
-                TestSuccess = () => Comparer<T>.Default.Compare(value, comparison) > 0,
-                FailMessage = $"greater-than({comparison})"
-            }
-        );
+        => value => new()
+        {
+            Success = Comparer<T>.Default.Compare(value, comparison) > 0,
+            FailMessage = $"greater-than({comparison})"
+        };
 
-    public static Func<ItContext<T>, ItContext<T>> LessThan<T>(
+    public static Func<T, NotNullAssertion> LessThan<T>(
         T? comparison
         )
         where T : IComparable<T>
-        => context => context.And(
-            value => new()
-            {
-                TestSuccess = () => Comparer<T>.Default.Compare(value, comparison) < 0,
-                FailMessage = $"less-than({comparison})"
-            }
-        );
+        => value => new()
+        {
+            Success = Comparer<T>.Default.Compare(value, comparison) < 0,
+            FailMessage = $"less-than({comparison})"
+        };
 }

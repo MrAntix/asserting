@@ -10,9 +10,9 @@ public sealed class AssertionTests
     [InlineData(null, true, null)]
     public void Assertion(string? value, bool negate, string? expected)
     {
-        var assertion = new Assertion()
+        var assertion = new MaybeNullAssertion()
         {
-            TestSuccess = () => value is not null,
+            Success = value is not null,
             FailMessage = "null"
         };
 
@@ -23,9 +23,9 @@ public sealed class AssertionTests
     public void Specific_FailNotMessage()
     {
 
-        var assertion = new Assertion()
+        var assertion = new MaybeNullAssertion()
         {
-            TestSuccess = () => true,
+            Success = true,
             FailMessage = "Rhubarb",
             FailNotMessage = "Custard"
         };

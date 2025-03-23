@@ -5,48 +5,44 @@ namespace Antix.Asserting;
 
 public static partial class Is
 {
-    public static ItContext<string> Empty(
-        ItContext<string> context
-        ) => context.And(
-            value => new()
-            {
-                TestSuccess = () => value?.Length == 0,
-                FailMessage = "empty"
-            });
+    public static NotNullAssertion Whitespace(
+        string value
+        ) => new()
+        {
+            Success = value.Length > 0 && value.All(char.IsWhiteSpace),
+            FailMessage = "whitespace"
+        };
 
-    public static ItContext<string> Whitespace(
-        ItContext<string> context
-        ) => context.And(
-            value => new()
-            {
-                TestSuccess = () => value?.Length > 0 && value.All(char.IsWhiteSpace),
-                FailMessage = "whitespace"
-            });
+    public static NotNullAssertion NotWhitespace(
+        string value
+        ) => new()
+        {
+            Success = value.Length == 0 || !value.All(char.IsWhiteSpace),
+            FailMessage = "not-whitespace",
+            FailNotMessage = "whitespace"
+        };
 
-    public static Func<ItContext<string>, ItContext<string>> Length(
+    public static Func<string, NotNullAssertion> Length(
         int length
-        ) => context => context.And(
-            value => new()
-            {
-                TestSuccess = () => value?.Length == length,
-                FailMessage = $"length({length})"
-            });
+        ) => value => new()
+        {
+            Success = value.Length == length,
+            FailMessage = $"length({length})"
+        };
 
-    public static Func<ItContext<string>, ItContext<string>> MinLength(
+    public static Func<string, NotNullAssertion> MinLength(
         int length
-        ) => context => context.And(
-            value => new()
-            {
-                TestSuccess = () => value?.Length >= length,
-                FailMessage = $"min-length({length})"
-            });
+        ) => value => new()
+        {
+            Success = value.Length >= length,
+            FailMessage = $"min-length({length})"
+        };
 
-    public static Func<ItContext<string>, ItContext<string>> MaxLength(
+    public static Func<string, NotNullAssertion> MaxLength(
         int length
-        ) => context => context.And(
-            value => new()
-            {
-                TestSuccess = () => value?.Length <= length,
-                FailMessage = $"max-length({length})"
-            });
+        ) => value => new()
+        {
+            Success = value.Length <= length,
+            FailMessage = $"max-length({length})"
+        };
 }

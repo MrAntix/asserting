@@ -1,48 +1,35 @@
-using static Antix.Asserting.Is;
-
 namespace Antix.Asserting.Tests;
 
 public sealed class MultipleValueTests
 {
-    [Fact]
-    public void Happy()
+    static readonly Person PERSON = new()
     {
-        var value = new
-        {
-            Name = "NAME",
-            Age = 35
-        };
+        Name = "NAME"
+    };
 
-        var values = new[] { value, value };
+    static readonly Person?[] PEOPLE = [null, PERSON];
 
-        var actualErrors = Validate
-            .It(value.Name).Is(Length(4))
-            .It(value.Age).Is(LessThan(40))
-            .It(values).Is(Count(2))
-            .Errors;
+    [Fact]
+    public void Fails()
+    {
+        Assert.True(
+            Validate
+                .It(PERSON.Name, it => it.Not.CountOf(1, 'N'))
+                .It(PEOPLE, it => it.Not.CountOf(1, PERSON))
+                .HasErrors(out var actualErrors)
+            );
 
-        Assert.Empty(actualErrors);
+        Assert.Equal(
+            [
+                "PERSON.Name:not-count-of(1,'N')",
+                "PEOPLE:not-count-of(1,PERSON)"
+            ],
+            actualErrors
+            );
     }
 
-    [Fact]
-    public void Fails_Multi_Value()
+    sealed record Person
     {
-        var value = new
-        {
-            Name = "NAME",
-            Age = 35
-        };
-
-        var values = new[] { value, value };
-
-        var actualErrors = Validate
-            .It(value.Name).Is(Length(5))
-            .It(value.Age).Is(GreaterThan(40))
-            .It(values).Is(Count(1))
-            .Errors;
-
-        Assert.Equal("value.Name:length(5)", actualErrors[0]);
-        Assert.Equal("value.Age:greater-than(40)", actualErrors[1]);
-        Assert.Equal("values:count(1)", actualErrors[2]);
+        public required string Name { get; init; }
     }
 }

@@ -1,8 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<Nullable>enable</Nullable>
 
+		<PackageVersion>1.0.0-alpha</PackageVersion>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Authors>Anthony Johnston</Authors>
+		<Company>Antix Software Limited</Company>
+	</PropertyGroup>
+
+	<Target Name="CopyPackage" AfterTargets="Pack">
+		<Copy
+		  SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg"
+		  DestinationFolder="D:\Apps\nuget\"
+    />
+	</Target>
+	
 </Project>
